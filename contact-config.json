@@ -1,3 +1,4 @@
 {
-  "endpoint": "https://formspree.io/f/mjyyzdze"
+  "provider": "aws",
+  "endpoint": "https://bky6rcqcei.execute-api.us-east-2.amazonaws.com/v1/contact"
 }

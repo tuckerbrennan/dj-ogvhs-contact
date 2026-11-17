@@ -1,0 +1,26 @@
+{
+  "Comment": "Restore contact hosting to GitHub Pages; leave all other OGVHS records intact",
+  "Changes": [
+    {
+      "Action": "DELETE",
+      "ResourceRecordSet": {
+        "Name": "contact.ogvhs.com.",
+        "Type": "A",
+        "AliasTarget": {
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "DNSName": "d8ekom0ef2sh2.cloudfront.net.",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "contact.ogvhs.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [{"Value": "tuckerbrennan.github.io."}]
+      }
+    }
+  ]
+}
