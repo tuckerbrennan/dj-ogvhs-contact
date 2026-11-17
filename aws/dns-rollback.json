@@ -1,0 +1,14 @@
+{
+  "Comment": "Restore contact hosting to GitHub Pages; leave all other OGVHS records intact",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "contact.ogvhs.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [{"Value": "tuckerbrennan.github.io."}]
+      }
+    }
+  ]
+}
