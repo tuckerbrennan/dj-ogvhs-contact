@@ -20,4 +20,10 @@ Publish this ZIP with Amplify CreateDeployment, PUT to the returned zipUploadUrl
 
 Only index.html, contact-config.json, src/ and public/ are packaged. Git metadata and operational documentation are excluded. Formspree remains the submission backend until an AWS replacement has verified end-to-end delivery.
 
-Rollback: restore the saved contact CNAME to tuckerbrennan.github.io in the existing Route 53 zone. Do not change nameservers or other subdomains. GitHub Pages source remains available.
+Rollback: apply `aws/dns-rollback.json` in the existing OGVHS Route 53 zone. It atomically removes the AWS alias and restores the saved CNAME to tuckerbrennan.github.io. Do not change nameservers or other subdomains. GitHub Pages source remains available.
+
+## November 17 cutover
+
+The AWS preview and the custom-host TLS endpoint were verified before changing traffic. The HTML release marker identifies commit eac1f8e5f1f1534f35690d9ddc1a56f60a1c0da3; the deployed form JavaScript and configuration matched committed files byte for byte. Contact now uses an A alias to d8ekom0ef2sh2.cloudfront.net. The form still posts to the existing Formspree endpoint; no messages were sent as part of deployment verification.
+
+The domain uses an ACM-managed wildcard certificate attached as a custom Amplify certificate. ACM manages its private key and renewal. Its DNS validation record must remain. This was necessary because the old GitHub Pages CNAME inherits certificate-issuer restrictions; no live mail, admin, listener, archive or collaboration records were changed for this cutover.
