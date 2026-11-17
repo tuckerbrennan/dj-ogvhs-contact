@@ -27,3 +27,11 @@ Rollback: apply `aws/dns-rollback.json` in the existing OGVHS Route 53 zone. It 
 The AWS preview and the custom-host TLS endpoint were verified before changing traffic. The HTML release marker identifies commit eac1f8e5f1f1534f35690d9ddc1a56f60a1c0da3; the deployed form JavaScript and configuration matched committed files byte for byte. Contact now uses an A alias to d8ekom0ef2sh2.cloudfront.net. The form still posts to the existing Formspree endpoint; no messages were sent as part of deployment verification.
 
 The domain uses an ACM-managed wildcard certificate attached as a custom Amplify certificate. ACM manages its private key and renewal. Its DNS validation record must remain. This was necessary because the old GitHub Pages CNAME inherits certificate-issuer restrictions; no live mail, admin, listener, archive or collaboration records were changed for this cutover.
+
+## AWS form delivery
+
+The contact form now uses the existing Ohio collaboration API at /v1/contact. Messages persist privately in DynamoDB before the stream worker delivers through SES to the verified owner inbox. Stable submission IDs deduplicate retries with unchanged contents; spam checks and per-source quotas run on the server. No visitor email is sent automatically.
+
+The owner confirmed receipt of the single approved test. Gmail headers passed SPF, DKIM and DMARC, though the first test initially landed in spam. The notification stream is enabled and processing successfully. Hosting and form delivery use AWS; the Google mailbox and direct email links remain the existing contact channels.
+
+Delivery rollback is independent of DNS: restore contact-config.json to {"endpoint":"https://formspree.io/f/mjyyzdze"}, restore the Formspree privacy notice/module version, commit, build and publish the contact branch only. Keep both provider records and pending AWS messages until reconciled; do not delete Formspree history or AWS messages during rollback.
